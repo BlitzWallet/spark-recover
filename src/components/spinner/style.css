@@ -1,0 +1,17 @@
+#activityIndicator {
+  width: 35px;
+  height: 35px;
+  border: 5px solid #e0e0e0;
+  border-top: 5px solid #0375f6;
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
