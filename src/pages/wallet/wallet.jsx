@@ -43,16 +43,17 @@ export default function WalletScreen({
     }
   };
   const sendPayment = async () => {
+    if (
+      sparkInformation.balance <
+      Number(bitcoinAmountInputSats) + invoiceInformation.fee
+    ) {
+      alert("Insufficent balance");
+      return;
+    }
     try {
       setError("");
       setIsLoading(true);
-      if (
-        sparkInformation.balance <
-        Number(bitcoinAmountInputSats) + invoiceInformation.fee
-      ) {
-        alert("Insufficent balance");
-        return;
-      }
+
       const response = await sparkPaymenWrapper({
         address,
         paymentType: isLightningPayment ? "lightning" : "bitcoin",
@@ -70,6 +71,7 @@ export default function WalletScreen({
     } finally {
       setInvoiceInformation({});
       setAddress("");
+      setBitcoinAmountInputSats("");
       setIsLoading(false);
     }
   };
