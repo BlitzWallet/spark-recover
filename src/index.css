@@ -36,3 +36,12 @@ a:link {
 a:visited {
   color: var(--tertiary); /* Visited (clicked) link color */
 }
+
+input:focus {
+  outline: none;
+  box-shadow: none;
+}
+textarea:focus {
+  outline: none;
+  box-shadow: none;
+}

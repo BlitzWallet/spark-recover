@@ -1,0 +1,61 @@
+.walletContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.walletContainer .switchContainer {
+  width: 200px;
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid gainsboro;
+  padding: 10px 0;
+  border-radius: 50px;
+  position: relative;
+}
+.walletContainer .optionSlider {
+  height: 85%;
+  width: 95px;
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  border-radius: 50px;
+  transition: left 0.5s ease-in-out;
+}
+.walletContainer .switchContainer p {
+  margin: 0;
+  position: relative;
+  z-index: 11;
+  width: 50%;
+  text-align: center;
+  cursor: pointer;
+}
+.walletContainer .errorText {
+  width: 100%;
+  max-width: 700px;
+  margin-top: 80px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.walletContainer textarea {
+  width: 100%;
+  max-width: 700px;
+  min-height: 150px;
+  max-height: 200px;
+  border: unset;
+  border-radius: 8px;
+  padding: 10px;
+  resize: none;
+}
+.walletContainer button {
+  max-width: max-content;
+  /* min-height: 55px; */
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
