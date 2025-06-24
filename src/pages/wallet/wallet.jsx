@@ -4,6 +4,7 @@ import { useSpark } from "../../contexts/sparkContext";
 import "./style.css";
 import ActivityIndicator from "../../components/spinner/spinner";
 import { sparkPaymenWrapper } from "../../functions/spark/payments";
+import TransactionElement from "../../components/transaction/txElement";
 
 export default function WalletScreen({
   currentState,
@@ -14,7 +15,6 @@ export default function WalletScreen({
   const [error, setError] = useState("");
   const [isLightningPayment, setIsLightningPayment] = useState(true);
   const [invoiceInformation, setInvoiceInformation] = useState({});
-  const [paymentInformation, setSetPaymentInformation] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [bitcoinAmountInputSats, setBitcoinAmountInputSats] = useState("");
   const [address, setAddress] = useState("");
@@ -27,7 +27,7 @@ export default function WalletScreen({
         getFee: true,
         address,
         paymentType: isLightningPayment ? "lightning" : "bitcoin",
-        amountSats: bitcoinAmountInputSats,
+        amountSats: Number(bitcoinAmountInputSats),
         sparkInformation,
       });
       if (response.didWork) {
@@ -49,21 +49,22 @@ export default function WalletScreen({
       const response = await sparkPaymenWrapper({
         address,
         paymentType: isLightningPayment ? "lightning" : "bitcoin",
-        amountSats: bitcoinAmountInputSats,
+        amountSats: Number(bitcoinAmountInputSats),
         sparkInformation,
       });
       if (response.didWork) {
-        setSetPaymentInformation(...response.response);
+        alert("Payment successful");
       } else throw new Error(response.error);
     } catch (err) {
       console.log(err);
       setError(err.message);
     } finally {
+      setInvoiceInformation({});
+      setAddress("");
       setIsLoading(false);
     }
   };
 
-  console.log(Object.keys(invoiceInformation).length);
   return (
     <div
       style={{
@@ -97,9 +98,23 @@ export default function WalletScreen({
       <textarea
         placeholder={isLightningPayment ? "lnbc15u1p3xn..." : "bc1p2tj3jnhz..."}
         onChange={(event) => setAddress(event.target.value)}
+        value={address}
         name=""
         id=""
       ></textarea>
+      {!isLightningPayment && (
+        <div className="sendContainer">
+          <p>Send Amount (sats)</p>
+          <input
+            value={bitcoinAmountInputSats}
+            onChange={(event) => setBitcoinAmountInputSats(event.target.value)}
+            placeholder="0"
+            type="number"
+            name=""
+            id=""
+          />
+        </div>
+      )}
 
       <button
         onClick={() => {
@@ -118,6 +133,12 @@ export default function WalletScreen({
           "Get payment quote"
         )}
       </button>
+      <p className="transactionContainerText">Transactions</p>
+      <div className="transactionsContainer">
+        {sparkInformation.transactions.map((item) => (
+          <TransactionElement item={item} />
+        ))}
+      </div>
     </div>
   );
 }

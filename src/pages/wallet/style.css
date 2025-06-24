@@ -51,6 +51,30 @@
   padding: 10px;
   resize: none;
 }
+.walletContainer .sendContainer {
+  margin-top: 10px;
+  text-align: center;
+}
+.walletContainer .sendContainer input {
+  border-radius: 8px;
+  border: unset;
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 5px;
+}
+.walletContainer .sendContainer input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.walletContainer .sendContainer input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.walletContainer .sendContainer input[type="number"] {
+  -moz-appearance: textfield;
+}
 .walletContainer button {
   max-width: max-content;
   /* min-height: 55px; */
@@ -58,4 +82,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 20px;
+}
+.walletContainer .transactionContainerText {
+  margin-top: auto;
+}
+.walletContainer .transactionsContainer {
+  width: 100%;
+  max-width: 700px;
+  max-height: 300px;
+  overflow-y: scroll;
+}
+.walletContainer .transactionsContainer .txContainer {
+  width: 100%;
+  margin: 20px 0;
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+}
+.walletContainer .transactionsContainer .txContainer p {
+  word-break: break-word;
 }

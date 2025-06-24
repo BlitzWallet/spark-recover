@@ -80,9 +80,8 @@ export default function RestoreScreen({
         .map((val) => val.trim().toLowerCase())
         .filter((val) => val);
 
-      if (!mnemonic || mnemonic.length !== 12) {
-        return;
-      }
+      if (!mnemonic || mnemonic.length !== 12)
+        throw new Error("Please enter 12 words");
       if (!validateMnemonic(mnemonic.join(" "), wordlist))
         throw new Error("Not a valid seedphrase");
       setMnemonic(mnemonic.join(" "));
