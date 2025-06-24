@@ -16,7 +16,7 @@ export const sparkPaymenWrapper = async ({
   address,
   paymentType,
   amountSats = 0,
-  exitSpeed = "FAST",
+  exitSpeed = "MEDIUM",
   fee,
   memo,
   sparkInformation,
@@ -38,8 +38,8 @@ export const sparkPaymenWrapper = async ({
           withdrawalAddress: address,
         });
         calculatedFee =
-          feeResponse.speedFast.userFee.originalValue +
-          feeResponse.speedFast.l1BroadcastFee.originalValue;
+          feeResponse.speedMedium.userFee.originalValue +
+          feeResponse.speedMedium.l1BroadcastFee.originalValue;
       }
       return {
         didWork: true,
