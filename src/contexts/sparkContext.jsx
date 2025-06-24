@@ -43,7 +43,7 @@ const SparkWalletProvider = ({ children, navigate }) => {
         ]);
         setSparkInformation({
           balance: balance?.balance || 0,
-          transactions: transactions?.txs || [],
+          transactions: transactions?.transfers || [],
           identityPubKey: pubkey,
           didConnect: true,
         });
@@ -59,16 +59,14 @@ const SparkWalletProvider = ({ children, navigate }) => {
 
     const updateSparkData = async () => {
       try {
-        const [balance, transactions, pubkey] = await Promise.all([
+        const [balance, transactions] = await Promise.all([
           getSparkBalance(),
           getSparkTransactions(),
-          getSparkIdentityPubKey(),
         ]);
-
         setSparkInformation((prev) => ({
           ...prev,
           balance: balance?.balance || 0,
-          transactions: transactions?.txs || [],
+          transactions: transactions?.transfers || [],
         }));
       } catch (error) {
         console.error("Failed to update Spark data:", error);
