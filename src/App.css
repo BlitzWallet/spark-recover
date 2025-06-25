@@ -35,6 +35,7 @@ button {
   color: white;
   margin-top: 20px;
   cursor: pointer;
+  font-size: 1rem;
 }
 h1 {
   font-size: 3rem;
