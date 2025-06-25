@@ -40,6 +40,7 @@ button {
 h1 {
   font-size: 3rem;
   text-align: center;
+  font-weight: 400;
 }
 .description {
   width: 100%;
