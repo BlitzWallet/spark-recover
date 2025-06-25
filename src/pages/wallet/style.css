@@ -75,6 +75,7 @@
   margin: 0;
 }
 .walletContainer .sendContainer input[type="number"] {
+  appearance: textfield;
   -moz-appearance: textfield;
 }
 .walletContainer button {
