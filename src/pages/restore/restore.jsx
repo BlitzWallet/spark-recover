@@ -140,14 +140,6 @@ export default function RestoreScreen({
     return rows;
   }, [inputedKey]);
 
-  // if (isValidating)
-  //   return (
-  //     <div className="connectingToSparkContainer">
-  //       <ActivityIndicator />
-  //       <p>{loadingMessage}</p>
-  //     </div>
-  //   );
-
   return (
     <div
       style={{

@@ -20,7 +20,7 @@ function App() {
   };
 
   return (
-    <div className="recoveryContainer">
+    <>
       <WelcomScreen
         currentState={currentState}
         handleStateChange={handleStateChange}
@@ -36,7 +36,7 @@ function App() {
         handleStateChange={handleStateChange}
         isTransitioning={isTransitioning}
       />
-    </div>
+    </>
   );
 }
 

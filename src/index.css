@@ -24,6 +24,15 @@
   font-family: var(--font-family);
   -webkit-tap-highlight-color: transparent;
   margin: 0;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+body {
+  width: 100dvw;
+  height: 100dvh;
 }
 
 a {
