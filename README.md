@@ -44,7 +44,31 @@ npm install
 npm run dev
 ```
 
-The app will be available at [http://localhost:5173](http://localhost:5173)
+## Running in GitHub Codespaces
+
+You can run this project entirely in the browser using GitHub Codespaces:
+
+### 1. Create a Codespace
+
+- Navigate to the repository on GitHub.
+- Click the **Code** button, then select the **Codespaces** tab.
+- Click **Create codespace on main**.
+
+### 2. Start the development server
+
+Once the Codespace starts and the environment is ready, run:
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Start the development server
+
+```bash
+npm run dev
+```
 
 ## Contributions
 
