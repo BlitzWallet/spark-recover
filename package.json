@@ -13,6 +13,7 @@
     "@buildonspark/spark-sdk": "^0.1.41",
     "@scure/bip32": "^1.7.0",
     "@scure/bip39": "^1.6.0",
+    "qr-scanner": "^1.4.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
