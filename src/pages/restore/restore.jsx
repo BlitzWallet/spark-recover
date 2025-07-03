@@ -12,6 +12,11 @@ import { validateMnemonic } from "@scure/bip39";
 import { wordlist } from "@scure/bip39/wordlists/english";
 import { useSpark } from "../../contexts/sparkContext";
 import ActivityIndicator from "../../components/spinner/spinner";
+import {
+  handleQRSeed,
+  handleRestoreFromText,
+} from "../../functions/handleSeedPaste";
+import Camera from "../camera/cameraPage";
 
 const NUMARRAY = Array.from({ length: 12 }, (_, i) => i + 1);
 const INITIAL_KEY_STATE = NUMARRAY.reduce((acc, num) => {
@@ -33,6 +38,7 @@ export default function RestoreScreen({
   const [currentFocused, setCurrentFocused] = useState(null);
   const keyRefs = useRef({});
   const [inputedKey, setInputedKey] = useState(INITIAL_KEY_STATE);
+  const [useCamera, setUseCamera] = useState(false);
 
   const handleInputElement = (text, keyNumber) => {
     setInputedKey((prev) => ({ ...prev, [`key${keyNumber}`]: text }));
@@ -54,9 +60,18 @@ export default function RestoreScreen({
       const response = await getDataFromClipboard();
 
       if (!response) throw new Error("Not able to get clipboard data");
+      let seed;
+      const data = handleRestoreFromText(response);
+      console.log(response, "tesitn", data);
+      if (!data.didWork || data.seed.length !== 12) {
+        const seedArray = handleQRSeed(response);
+        if (!data.didWork) throw new Error("Unable to find seed in string");
+        seed = seedArray.seed;
+      } else {
+        seed = data.seed;
+      }
 
-      const data = response;
-      const splitSeed = data.split(" ");
+      const splitSeed = seed;
       if (
         !splitSeed.every((word) => word.trim().length > 0) ||
         splitSeed.length !== 12
@@ -73,6 +88,7 @@ export default function RestoreScreen({
       alert(err.message);
     }
   };
+
   const keyValidation = async () => {
     try {
       setIsValidating(true);
@@ -140,6 +156,16 @@ export default function RestoreScreen({
     return rows;
   }, [inputedKey]);
 
+  if (useCamera) {
+    return (
+      <Camera
+        setUseCamera={setUseCamera}
+        setInputedKey={setInputedKey}
+        NUMARRAY={NUMARRAY}
+      />
+    );
+  }
+
   return (
     <div
       style={{
@@ -170,6 +196,13 @@ export default function RestoreScreen({
             .
           </p>
           <div className="inputKeysContainer">{inputKeys}</div>
+          <button
+            className="scanBTN"
+            style={{ color: Colors.light.text }}
+            onClick={() => setUseCamera(true)}
+          >
+            Scan QR
+          </button>
           <div className="buttonsContainer">
             <button
               style={{

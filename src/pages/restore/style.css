@@ -48,10 +48,16 @@
   width: 100%;
   max-width: 300px;
   column-gap: 10px;
-  margin-top: auto;
+  margin-top: 10px;
 }
 .restoreScreen .buttonsContainer .customButton {
   max-width: unset;
+}
+
+.restoreScreen .scanBTN {
+  background-color: unset;
+  border: 2px solid rgb(46, 46, 46);
+  margin-top: auto;
 }
 
 .restoreScreen .buttonsContainer button {

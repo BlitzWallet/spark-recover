@@ -1,0 +1,13 @@
+.backArrowContainer {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-right: auto;
+}
+.backArrowContainer img {
+  width: 30px;
+  height: 30px;
+}
