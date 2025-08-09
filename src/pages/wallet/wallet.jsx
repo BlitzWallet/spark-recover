@@ -31,9 +31,7 @@ export default function WalletScreen({
         sparkInformation,
       });
       if (response.didWork) {
-        setInvoiceInformation({
-          fee: response.fee,
-        });
+        setInvoiceInformation(response);
       } else throw new Error(response.error);
     } catch (err) {
       console.log(err);
@@ -60,7 +58,10 @@ export default function WalletScreen({
         amountSats: Math.round(
           Number(bitcoinAmountInputSats) + invoiceInformation.fee
         ),
+        fee: invoiceInformation.fee,
+        userBalance: sparkInformation.balance,
         sparkInformation,
+        feeQuote: sparkInformation.feeQuote,
       });
       if (response.didWork) {
         alert("Payment successful");
