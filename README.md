@@ -1,7 +1,7 @@
 # Spark Wallet Recovery Tool
 
 A minimal, open-source recovery interface for Spark-compatible Bitcoin and Lightning wallets.  
-Hosted at [recover.blitz-wallet.com](https://recover.blitzwalletapp.com), this tool is designed to help users regain access to their funds in case their original wallet app becomes unavailable.
+Hosted at [recover.blitzwalletapp.com](https://recover.blitzwalletapp.com), this tool is designed to help users regain access to their funds in case their original wallet app becomes unavailable.
 
 > Self-custodial. Stateless. Trustless. No third parties involved.
 
@@ -15,7 +15,7 @@ Hosted at [recover.blitz-wallet.com](https://recover.blitzwalletapp.com), this t
 
 ## 🛠 How to Use It
 
-Visit: [https://recover.blitz-wallet.com](https://recover.blitzwalletapp.com)
+Visit: [https://recover.blitzwalletapp.com](https://recover.blitzwalletapp.com)
 
 1. Enter the seedphrase associated with your Spark wallet.
 2. View your available balance.
