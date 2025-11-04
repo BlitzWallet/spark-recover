@@ -181,7 +181,7 @@ export default function RestoreScreen({
         </div>
       ) : (
         <>
-          <h1>Restore your Spark Wallet.</h1>
+          <h1>Restore your Blitz Wallet.</h1>
           <p className="description">
             <strong>Important</strong>: For your security, never enter your seed
             phrase into a random website. We recommend restoring your wallet

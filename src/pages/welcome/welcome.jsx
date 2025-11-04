@@ -13,12 +13,12 @@ export default function WelcomScreen({
       }}
       className="screenContainerStyles welcomeContainer"
     >
-      <h1>Welcome to Spark Recover</h1>
+      <h1>Welcome to Blitz Recover</h1>
       <p className="description">
-        This tool helps you restore your seed and recover your funds from any
-        Spark-compatible wallet. <strong>Never trust, always verify.</strong>{" "}
-        For full security, it's recommended that you run your own copy of this
-        tool. View the source on{" "}
+        This tool helps you restore your seed and recover your funds from your
+        Blitz Wallet or any Spark-compatible wallet.{" "}
+        <strong>Never trust, always verify.</strong> For full security, it's
+        recommended that you run your own copy of this tool. View the source on{" "}
         <a
           href="https://github.com/BlitzWallet/spark-recover"
           target="_blank"
