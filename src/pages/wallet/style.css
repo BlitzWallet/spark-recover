@@ -2,108 +2,334 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 24px;
+  padding-bottom: 20px;
 }
-.walletContainer h1 {
-  margin-top: auto;
+
+/* Balance Section */
+.walletContainer .balanceSection {
+  width: 100%;
+  max-width: 700px;
+  text-align: center;
+  padding: 32px 20px 24px;
 }
-.walletContainer .switchContainer {
-  width: 200px;
-  margin: 20px auto;
+.walletContainer .balanceLabel {
+  font-size: 0.85rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 4px;
+}
+.walletContainer .balanceAmount {
+  font-size: 2.8rem;
+  font-weight: 600;
+  margin: 0;
+}
+.walletContainer .balanceUnit {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #666;
+}
+
+/* Send Section */
+.walletContainer .sendSection {
+  width: 100%;
+  max-width: 700px;
+  background-color: white;
+  border-radius: 12px;
+  padding: 24px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border: 1px solid gainsboro;
-  padding: 10px 0;
-  border-radius: 50px;
-  position: relative;
+  flex-direction: column;
+  gap: 16px;
 }
-.walletContainer .optionSlider {
-  height: 85%;
-  width: 95px;
-  position: absolute;
-  left: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  border-radius: 50px;
-  transition: left 0.5s ease-in-out;
-}
-.walletContainer .switchContainer p {
+.walletContainer .sectionTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
   margin: 0;
-  position: relative;
-  z-index: 11;
-  width: 50%;
-  text-align: center;
+}
+
+/* Payment Type Tabs */
+.walletContainer .paymentTabs {
+  display: flex;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  padding: 3px;
+  gap: 3px;
+}
+.walletContainer .paymentTab {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #666;
+  font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
+  transition: all 0.2s ease;
+  margin: 0;
+  max-width: unset;
+  width: auto;
 }
-.walletContainer .errorText {
-  width: 100%;
-  max-width: 700px;
-  margin-top: 80px;
-  margin-bottom: 10px;
-  text-align: center;
+.walletContainer .paymentTab.active {
+  background-color: var(--primaryBlue);
+  color: white;
 }
-.walletContainer textarea {
+.walletContainer .paymentTab:not(.active):hover {
+  background-color: #e4e4e4;
+}
+
+/* Input Fields */
+.walletContainer .inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.walletContainer .inputLabel {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #555;
+}
+.walletContainer .addressInput {
   width: 100%;
-  max-width: 700px;
-  min-height: 150px;
-  max-height: 200px;
-  border: unset;
+  min-height: 80px;
+  max-height: 120px;
+  border: 1.5px solid #e0e0e0;
   border-radius: 8px;
-  padding: 10px;
+  padding: 12px;
   resize: none;
+  font-size: 0.9rem;
+  font-family: monospace;
+  transition: border-color 0.2s ease;
+  background-color: #fafafa;
 }
-.walletContainer .sendContainer {
-  margin-top: 10px;
-  text-align: center;
+.walletContainer .addressInput:focus {
+  border-color: var(--primaryBlue);
+  background-color: white;
 }
-.walletContainer .sendContainer input {
-  border-radius: 8px;
-  border: unset;
+.walletContainer .amountInput {
   width: 100%;
-  padding: 10px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 12px;
   font-size: 1rem;
-  text-align: center;
-  margin-top: 5px;
-}
-.walletContainer .sendContainer input::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-.walletContainer .sendContainer input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-.walletContainer .sendContainer input[type="number"] {
+  text-align: left;
+  transition: border-color 0.2s ease;
+  background-color: #fafafa;
   appearance: textfield;
   -moz-appearance: textfield;
 }
-.walletContainer button {
-  max-width: max-content;
-  /* min-height: 55px; */
-  min-width: 200px;
+.walletContainer .amountInput:focus {
+  border-color: var(--primaryBlue);
+  background-color: white;
+}
+.walletContainer .amountInput::-webkit-outer-spin-button,
+.walletContainer .amountInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Fee Display */
+.walletContainer .feeDisplay {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  border: 1px solid #eeeeee;
+}
+.walletContainer .feeLabel {
+  font-size: 0.85rem;
+  color: #666;
+}
+.walletContainer .feeAmount {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Error Display */
+.walletContainer .errorText {
+  color: #e20000;
+  font-size: 0.85rem;
+  margin: 0;
+  padding: 8px 12px;
+  background-color: #fff0f0;
+  border-radius: 6px;
+  border: 1px solid #ffe0e0;
+}
+
+/* Action Buttons */
+.walletContainer .sendButton {
+  width: 100%;
+  max-width: 100%;
+  padding: 14px 24px;
+  background-color: var(--primaryBlue);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  transition: opacity 0.2s ease;
+  margin: 0;
 }
-.walletContainer .transactionContainerText {
-  margin-top: auto;
+.walletContainer .sendButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.walletContainer .sendButton:not(:disabled):hover {
+  opacity: 0.9;
+}
+.walletContainer .cancelButton {
+  width: 100%;
+  max-width: 100%;
+  padding: 12px 24px;
+  background-color: transparent;
+  color: #666;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin: 0;
+  transition: all 0.2s ease;
+}
+.walletContainer .cancelButton:hover {
+  border-color: #bbb;
+  color: #333;
+}
+
+/* Transactions Section */
+.walletContainer .transactionsSection {
+  width: 100%;
+  max-width: 700px;
+}
+.walletContainer .transactionsSection .sectionTitle {
+  margin-bottom: 12px;
 }
 .walletContainer .transactionsContainer {
   width: 100%;
-  max-width: 700px;
-  max-height: 300px;
-  min-height: 200px;
-  overflow-y: scroll;
+  max-height: 400px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
+.walletContainer .emptyState {
+  text-align: center;
+  color: #999;
+  padding: 32px 0;
+  font-size: 0.9rem;
+}
+
+/* Transaction Element */
 .walletContainer .transactionsContainer .txContainer {
   width: 100%;
-  margin: 20px 0;
   background-color: white;
-  padding: 10px;
-  border-radius: 8px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  margin: 0;
 }
-.walletContainer .transactionsContainer .txContainer p {
-  word-break: break-word;
+.walletContainer .transactionsContainer .txContainer:hover {
+  background-color: #f8f8f8;
+}
+.txRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.txLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.txDirection {
+  font-size: 1.2rem;
+  font-weight: 700;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.txIncoming {
+  color: #16a34a;
+}
+.txDirection.txIncoming {
+  background-color: #dcfce7;
+}
+.txOutgoing {
+  color: #dc2626;
+}
+.txDirection.txOutgoing {
+  background-color: #fef2f2;
+}
+.txInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.txType {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
+}
+.txDate {
+  font-size: 0.75rem;
+  color: #999;
+}
+.txRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+.txAmount {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.txStatus {
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+.statusCompleted {
+  background-color: #dcfce7;
+  /* color: #16a34a; */
+}
+.statusPending {
+  background-color: #fef3c7;
+  /* color: #d97706; */
+}
+.statusFailed {
+  background-color: #fef2f2;
+  /* color: #dc2626; */
+}
+.txId {
+  font-size: 0.7rem;
+  color: #bbb;
+  margin-top: 6px;
+  font-family: monospace;
+}
+
+/* Responsive */
+@media screen and (max-width: 500px) {
+  .walletContainer .balanceAmount {
+    font-size: 2rem;
+  }
+  .walletContainer .balanceUnit {
+    font-size: 1rem;
+  }
+  .walletContainer .sendSection {
+    padding: 16px;
+  }
 }
