@@ -1,335 +1,418 @@
 .walletContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-  padding-bottom: 20px;
+  background: var(--color-bg);
 }
 
-/* Balance Section */
-.walletContainer .balanceSection {
-  width: 100%;
-  max-width: 700px;
-  text-align: center;
-  padding: 32px 20px 24px;
+.walletContent {
+  padding-bottom: 2.5rem;
 }
-.walletContainer .balanceLabel {
-  font-size: 0.85rem;
-  color: #666;
+
+.walletEyebrow,
+.sectionEyebrow {
+  margin: 1.2rem 0 0.7rem;
+  color: var(--color-brand);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin: 0 0 4px;
-}
-.walletContainer .balanceAmount {
-  font-size: 2.8rem;
-  font-weight: 600;
-  margin: 0;
-}
-.walletContainer .balanceUnit {
-  font-size: 1.2rem;
-  font-weight: 400;
-  color: #666;
 }
 
-/* Send Section */
-.walletContainer .sendSection {
-  width: 100%;
-  max-width: 700px;
-  background-color: white;
-  border-radius: 12px;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.walletContainer .sectionTitle {
-  font-size: 1.1rem;
-  font-weight: 600;
+.walletContent > h1 {
   margin: 0;
-}
-
-/* Payment Type Tabs */
-.walletContainer .paymentTabs {
-  display: flex;
-  background-color: #f0f0f0;
-  border-radius: 8px;
-  padding: 3px;
-  gap: 3px;
-}
-.walletContainer .paymentTab {
-  flex: 1;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 6px;
-  background: transparent;
-  color: #666;
-  font-size: 0.9rem;
+  color: var(--color-ink);
+  font-size: clamp(2.65rem, 5vw, 4.4rem);
   font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  margin: 0;
-  max-width: unset;
-  width: auto;
-}
-.walletContainer .paymentTab.active {
-  background-color: var(--primaryBlue);
-  color: white;
-}
-.walletContainer .paymentTab:not(.active):hover {
-  background-color: #e4e4e4;
+  letter-spacing: -0.05em;
+  line-height: 1;
 }
 
-/* Input Fields */
-.walletContainer .inputGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.walletContainer .inputLabel {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: #555;
-}
-.walletContainer .addressInput {
-  width: 100%;
-  min-height: 80px;
-  max-height: 120px;
-  border: 1.5px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 12px;
-  resize: none;
-  font-size: 0.9rem;
-  font-family: monospace;
-  transition: border-color 0.2s ease;
-  background-color: #fafafa;
-}
-.walletContainer .addressInput:focus {
-  border-color: var(--primaryBlue);
-  background-color: white;
-}
-.walletContainer .amountInput {
-  width: 100%;
-  border: 1.5px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 12px;
-  font-size: 1rem;
-  text-align: left;
-  transition: border-color 0.2s ease;
-  background-color: #fafafa;
-  appearance: textfield;
-  -moz-appearance: textfield;
-}
-.walletContainer .amountInput:focus {
-  border-color: var(--primaryBlue);
-  background-color: white;
-}
-.walletContainer .amountInput::-webkit-outer-spin-button,
-.walletContainer .amountInput::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+.walletLead {
+  max-width: 555px;
+  margin: 1rem 0 0;
+  color: var(--color-ink-60);
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
-/* Fee Display */
-.walletContainer .feeDisplay {
+.bitcoinBalance {
+  width: 100%;
+  margin-top: 2rem;
+  padding: 1.45rem 1.5rem;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  background-color: #f7f7f7;
-  border-radius: 8px;
-  border: 1px solid #eeeeee;
-}
-.walletContainer .feeLabel {
-  font-size: 0.85rem;
-  color: #666;
-}
-.walletContainer .feeAmount {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #333;
+  gap: 1rem;
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
 }
 
-/* Error Display */
-.walletContainer .errorText {
-  color: #e20000;
-  font-size: 0.85rem;
-  margin: 0;
-  padding: 8px 12px;
-  background-color: #fff0f0;
-  border-radius: 6px;
-  border: 1px solid #ffe0e0;
+.assetIdentity {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
-/* Action Buttons */
-.walletContainer .sendButton {
-  width: 100%;
-  max-width: 100%;
-  padding: 14px 24px;
-  background-color: var(--primaryBlue);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.2s ease;
-  margin: 0;
-}
-.walletContainer .sendButton:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-.walletContainer .sendButton:not(:disabled):hover {
-  opacity: 0.9;
-}
-.walletContainer .cancelButton {
-  width: 100%;
-  max-width: 100%;
-  padding: 12px 24px;
-  background-color: transparent;
-  color: #666;
-  border: 1.5px solid #ddd;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  margin: 0;
-  transition: all 0.2s ease;
-}
-.walletContainer .cancelButton:hover {
-  border-color: #bbb;
-  color: #333;
-}
-
-/* Transactions Section */
-.walletContainer .transactionsSection {
-  width: 100%;
-  max-width: 700px;
-}
-.walletContainer .transactionsSection .sectionTitle {
-  margin-bottom: 12px;
-}
-.walletContainer .transactionsContainer {
-  width: 100%;
-  max-height: 400px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.walletContainer .emptyState {
-  text-align: center;
-  color: #999;
-  padding: 32px 0;
-  font-size: 0.9rem;
-}
-
-/* Transaction Element */
-.walletContainer .transactionsContainer .txContainer {
-  width: 100%;
-  background-color: white;
-  padding: 14px 16px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.15s ease;
-  margin: 0;
-}
-.walletContainer .transactionsContainer .txContainer:hover {
-  background-color: #f8f8f8;
-}
-.txRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.txLeft {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.txDirection {
-  font-size: 1.2rem;
-  font-weight: 700;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.bitcoinDot {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
   border-radius: 50%;
-}
-.txIncoming {
-  color: #16a34a;
-}
-.txDirection.txIncoming {
-  background-color: #dcfce7;
-}
-.txOutgoing {
-  color: #dc2626;
-}
-.txDirection.txOutgoing {
-  background-color: #fef2f2;
-}
-.txInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.txType {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #333;
-}
-.txDate {
-  font-size: 0.75rem;
-  color: #999;
-}
-.txRight {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 2px;
-}
-.txAmount {
-  font-size: 0.9rem;
+  background: color-mix(in srgb, var(--color-orange) 18%, white);
+  color: #b76900;
+  font-size: 1.2rem;
   font-weight: 600;
 }
-.txStatus {
-  font-size: 0.7rem;
-  font-weight: 500;
-  padding: 2px 8px;
-  border-radius: 10px;
-}
-.statusCompleted {
-  background-color: #dcfce7;
-  /* color: #16a34a; */
-}
-.statusPending {
-  background-color: #fef3c7;
-  /* color: #d97706; */
-}
-.statusFailed {
-  background-color: #fef2f2;
-  /* color: #dc2626; */
-}
-.txId {
-  font-size: 0.7rem;
-  color: #bbb;
-  margin-top: 6px;
-  font-family: monospace;
+
+.assetIdentity p {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: 0.92rem;
+  font-weight: 600;
 }
 
-/* Responsive */
-@media screen and (max-width: 500px) {
-  .walletContainer .balanceAmount {
-    font-size: 2rem;
+.assetIdentity span:not(.bitcoinDot) {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--color-ink-45);
+  font-size: 0.75rem;
+}
+
+.bitcoinBalance > strong {
+  color: var(--color-ink);
+  font-size: clamp(1.35rem, 4vw, 2rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.bitcoinBalance > strong span {
+  color: var(--color-ink-45);
+  font-size: 0.75em;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.tokenBalances {
+  margin-top: 1.35rem;
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid var(--color-hairline);
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+.tokenHeading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.tokenHeading .sectionEyebrow {
+  margin: 0;
+}
+
+.tokenHeading h2,
+.withdrawalPanel h2 {
+  margin: 0.4rem 0 0;
+  color: var(--color-ink);
+  font-size: 1.35rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+.tokenHeading > span {
+  min-width: 25px;
+  min-height: 25px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-surface-offset);
+  color: var(--color-ink-60);
+  font-size: 0.73rem;
+  font-weight: 600;
+}
+
+.tokenList {
+  display: grid;
+  margin-top: 1rem;
+  border-top: 1px solid var(--color-hairline);
+}
+
+.tokenRow {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+.tokenRow strong,
+.tokenRow p {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.tokenRow span {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--color-ink-45);
+  font-size: 0.73rem;
+}
+
+.tokenRow p {
+  max-width: 50%;
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+
+.tokenNote {
+  margin: 0.9rem 0 0;
+  color: var(--color-ink-45);
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.withdrawalPanel {
+  margin-top: 2.35rem;
+  padding: clamp(1.35rem, 4vw, 2rem);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.withdrawalPanel .sectionEyebrow {
+  margin: 0;
+}
+
+.withdrawalLead,
+.reviewIntro,
+.withdrawalSuccess > p:not(.sectionEyebrow) {
+  margin: 0.75rem 0 0;
+  color: var(--color-ink-60);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.withdrawalForm {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.withdrawalField {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.withdrawalField > span {
+  color: var(--color-ink-70);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.withdrawalField textarea,
+.withdrawalField input {
+  width: 100%;
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-card);
+  outline: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-size: 0.85rem;
+  transition: border-color var(--ease-micro), box-shadow var(--ease-micro), background var(--ease-micro);
+}
+
+.withdrawalField textarea {
+  min-height: 82px;
+  padding: 0.8rem 0.9rem;
+  resize: vertical;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.withdrawalField input {
+  height: 51px;
+  padding: 0.7rem 0.9rem;
+}
+
+.withdrawalField textarea:focus,
+.withdrawalField input:focus {
+  border-color: var(--color-brand);
+  box-shadow: 0 0 0 3px rgba(3, 117, 246, 0.11);
+  background: var(--color-surface);
+}
+
+.withdrawalField small {
+  color: var(--color-ink-45);
+  font-size: 0.74rem;
+}
+
+.destinationMeta {
+  min-height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--color-ink-45);
+  font-size: 0.74rem;
+}
+
+.destinationMeta .recoveryButtonText {
+  flex: 0 0 auto;
+  color: var(--color-brand);
+  font-size: 0.78rem;
+}
+
+.destinationType {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--color-green);
+  font-weight: 500;
+}
+
+.destinationType::before {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  content: "";
+}
+
+.destinationType.bitcoin {
+  color: #b76900;
+}
+
+.destinationInvalid {
+  color: var(--color-error-text);
+}
+
+.invoiceAmountNote {
+  margin: -0.15rem 0 0;
+  color: var(--color-ink-45);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.withdrawalError {
+  margin: 0;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--color-error-border);
+  border-radius: var(--radius-card);
+  background: var(--color-error-bg);
+  color: var(--color-error-text);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.withdrawalAction {
+  width: 100%;
+}
+
+.reviewList {
+  display: grid;
+  margin: 1.35rem 0 0;
+  border-top: 1px solid var(--color-hairline);
+}
+
+.reviewList > div {
+  min-height: 51px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+.reviewList dt {
+  color: var(--color-ink-60);
+  font-size: 0.78rem;
+}
+
+.reviewList dd {
+  max-width: 65%;
+  margin: 0;
+  color: var(--color-ink);
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-align: right;
+}
+
+.reviewDestination dd {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.7rem;
+  font-weight: 400;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.reviewActions {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.reviewActions .recoveryButton {
+  width: 100%;
+}
+
+.withdrawalSuccess {
+  text-align: center;
+}
+
+.successMark {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 1.15rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-green) 17%, white);
+  color: #258a57;
+  font-size: 1.45rem;
+  font-weight: 600;
+}
+
+.withdrawalSuccess h2 {
+  margin-top: 0.4rem;
+}
+
+.withdrawalSuccess .recoveryButton {
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 500px) {
+  .walletContent > h1 {
+    font-size: clamp(2.4rem, 12vw, 3.25rem);
   }
-  .walletContainer .balanceUnit {
-    font-size: 1rem;
+
+  .bitcoinBalance {
+    padding: 1.2rem;
   }
-  .walletContainer .sendSection {
-    padding: 16px;
+
+  .bitcoinBalance > strong {
+    font-size: 1.35rem;
+  }
+
+  .tokenBalances {
+    padding: 1.15rem 0.2rem;
+  }
+
+  .withdrawalPanel {
+    margin-top: 1.8rem;
+    padding: 1.25rem;
+  }
+
+  .reviewActions {
+    grid-template-columns: 1fr;
+  }
+
+  .reviewActions .recoveryButtonSecondary {
+    width: 100%;
   }
 }

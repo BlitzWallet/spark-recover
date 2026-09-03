@@ -1,0 +1,89 @@
+.recoveryHeader {
+  position: fixed;
+  top: 1rem;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  padding: 0 1.5rem;
+  pointer-events: none;
+}
+
+.recoveryHeaderInner {
+  width: min(100%, 1080px);
+  min-height: 58px;
+  margin: 0 auto;
+  padding: 0.45rem 0.6rem 0.45rem 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-pill);
+  background: rgba(246, 244, 239, 0.88);
+  box-shadow: var(--shadow-nav);
+  backdrop-filter: blur(16px);
+  pointer-events: auto;
+}
+
+.recoveryBrand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--color-ink);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.recoveryBrandContext,
+.recoverySourceLink {
+  color: var(--color-ink-60);
+  font-size: 0.84rem;
+  font-weight: 500;
+}
+
+.recoveryBrandDivider {
+  width: 1px;
+  height: 18px;
+  background: var(--color-hairline);
+}
+
+.recoveryBackButton {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-ink);
+  font-size: 1.15rem;
+  cursor: pointer;
+  transition: background var(--ease-micro), transform var(--ease-micro);
+}
+
+.recoveryBackButton:hover {
+  background: var(--color-surface-offset);
+  transform: translateX(-2px);
+}
+
+.recoverySourceLink {
+  padding: 0.55rem 0.85rem;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  transition: background var(--ease-micro), color var(--ease-micro);
+}
+
+.recoverySourceLink:hover {
+  background: var(--color-surface-offset);
+  color: var(--color-ink);
+}
+
+@media (max-width: 680px) {
+  .recoveryHeader {
+    top: 0.75rem;
+    padding: 0 1rem;
+  }
+
+  .recoveryHeaderInner {
+    min-height: 54px;
+  }
+}

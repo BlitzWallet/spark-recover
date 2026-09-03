@@ -22,15 +22,16 @@ export const sparkPaymenWrapper = async ({
   usingZeroAmountInvoice = false,
 }) => {
   try {
-    console.log("Begining spark payment");
     if (!sparkWallet) throw new Error("sparkWallet not initialized");
     const supportFee = 0;
     if (getFee) {
-      console.log("Calculating spark payment fee");
       let calculatedFee = 0;
       let tempFeeQuote;
       if (paymentType === "lightning") {
-        const routingFee = await getSparkLightningPaymentFeeEstimate(address);
+        const routingFee = await getSparkLightningPaymentFeeEstimate(
+          address,
+          usingZeroAmountInvoice ? amountSats : undefined
+        );
         if (!routingFee.didWork)
           throw new Error(routingFee.error || "Unable to get routing fee");
         calculatedFee = routingFee.response;
@@ -114,7 +115,6 @@ export const sparkPaymenWrapper = async ({
           onChainPayResponse.error || "Error when sending bitcoin payment"
         );
 
-      console.log(onChainPayResponse, "on-chain pay response");
       const data = onChainPayResponse.response;
 
       const tx = {
@@ -162,13 +162,8 @@ export const sparkPaymenWrapper = async ({
       };
       response = tx;
     }
-    console.log(response, "resonse in send function");
     return { didWork: true, response };
   } catch (err) {
-    console.log("Send lightning payment error", err);
     return { didWork: false, error: err.message };
-  } finally {
-    if (!getFee) {
-    }
   }
 };

@@ -24,7 +24,6 @@ export const initializeSparkWallet = async (mnemoinc) => {
 
     if (type === "wallet") {
       const { wallet } = value;
-      console.log("Wallet initialized:", await wallet.getIdentityPublicKey());
       sparkWallet = wallet;
 
       return { isConnected: true };
@@ -32,7 +31,6 @@ export const initializeSparkWallet = async (mnemoinc) => {
       return { isConnected: false };
     }
   } catch (err) {
-    console.log("Initialize spark wallet error", err);
     return { isConnected: false };
   }
 };
@@ -42,7 +40,7 @@ export const getSparkIdentityPubKey = async () => {
     if (!sparkWallet) throw new Error("sparkWallet not initialized");
     return await sparkWallet.getIdentityPublicKey();
   } catch (err) {
-    console.log("Get spark balance error", err);
+    return "";
   }
 };
 
@@ -52,10 +50,11 @@ export const getSparkBalance = async () => {
     const balance = await sparkWallet.getBalance();
     return {
       balance: balance.balance,
+      satsBalance: balance.satsBalance,
+      tokenBalances: balance.tokenBalances,
       didWork: true,
     };
   } catch (err) {
-    console.log("Get spark balance error", err);
     return { didWork: false };
   }
 };
@@ -214,13 +213,13 @@ export const sendSparkTokens = async ({
 
 export const getSparkLightningPaymentFeeEstimate = async (
   invoice,
-  amountSat
+  amountSats
 ) => {
   try {
     if (!sparkWallet) throw new Error("sparkWallet not initialized");
     const response = await sparkWallet.getLightningSendFeeEstimate({
       encodedInvoice: invoice.toLowerCase(),
-      amountSats: amountSat,
+      amountSats,
     });
     return { didWork: true, response };
   } catch (err) {
@@ -246,7 +245,7 @@ export const getSparkBitcoinPaymentFeeEstimate = async ({
     if (!sparkWallet) throw new Error("sparkWallet not initialized");
     const response = await sparkWallet.getWithdrawalFeeQuote({
       amountSats,
-      withdrawalAddress: withdrawalAddress.toLowerCase(),
+      withdrawalAddress,
     });
     return { didWork: true, response };
   } catch (err) {
@@ -327,7 +326,7 @@ export const sendSparkBitcoinPayment = async ({
   try {
     if (!sparkWallet) throw new Error("sparkWallet not initialized");
     const response = await sparkWallet.withdraw({
-      onchainAddress: onchainAddress.toLowerCase(),
+      onchainAddress,
       exitSpeed,
       amountSats,
       feeQuote,

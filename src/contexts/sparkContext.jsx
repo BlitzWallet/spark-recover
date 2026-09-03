@@ -1,11 +1,4 @@
-import {
-  createContext,
-  useState,
-  useContext,
-  useMemo,
-  useEffect,
-  useRef,
-} from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
   getSparkBalance,
   getSparkIdentityPubKey,
@@ -13,83 +6,99 @@ import {
   initializeSparkWallet,
 } from "../functions/spark";
 
-// Initiate context
 const SparkWalletManager = createContext(null);
 
-const SparkWalletProvider = ({ children, navigate }) => {
-  const [mnemoinc, setMnemonic] = useState("");
+const emptySparkInformation = {
+  balance: 0,
+  satsBalance: { available: 0, owned: 0, incoming: 0 },
+  tokenBalances: new Map(),
+  transactions: [],
+  identityPubKey: "",
+  didConnect: null,
+  connectionError: false,
+};
 
-  const startSparkConnectionRef = useRef(null);
-  const updateSparkState = useRef(null);
+const SparkWalletProvider = ({ children }) => {
+  const [sparkInformation, setSparkInformation] = useState(emptySparkInformation);
+  const isInitializingRef = useRef(false);
 
-  const [sparkInformation, setSparkInformation] = useState({
-    balance: 0,
-    transactions: [],
-    identityPubKey: "",
-    didConnect: null,
-  });
+  const restoreWallet = useCallback(async (mnemonic) => {
+    if (!mnemonic || isInitializingRef.current) return false;
+    isInitializingRef.current = true;
+    setSparkInformation((current) => ({
+      ...current,
+      connectionError: false,
+      didConnect: null,
+    }));
 
-  useEffect(() => {
-    if (!mnemoinc) return;
-    if (startSparkConnectionRef.current) return;
-    startSparkConnectionRef.current = true;
-    async function initWallet() {
-      const response = await initializeSparkWallet(mnemoinc);
-      if (response.isConnected) {
-        const [balance, transactions, pubkey] = await Promise.all([
-          getSparkBalance(),
-          getSparkTransactions(),
-          getSparkIdentityPubKey(),
-        ]);
-        setSparkInformation({
-          balance: balance?.balance || 0,
-          transactions: transactions?.transfers || [],
-          identityPubKey: pubkey,
-          didConnect: true,
-        });
-      }
+    const response = await initializeSparkWallet(mnemonic);
+    if (!response?.isConnected) {
+      isInitializingRef.current = false;
+      setSparkInformation((current) => ({
+        ...current,
+        connectionError: true,
+        didConnect: false,
+      }));
+      return false;
     }
-    initWallet();
-  }, [mnemoinc]);
+
+    try {
+      const [balanceResult, transactionsResult, identityPubKey] = await Promise.all([
+        getSparkBalance(),
+        getSparkTransactions(),
+        getSparkIdentityPubKey(),
+      ]);
+      setSparkInformation({
+        balance: balanceResult?.balance ?? 0,
+        satsBalance:
+          balanceResult?.satsBalance ?? { available: 0, owned: 0, incoming: 0 },
+        tokenBalances: balanceResult?.tokenBalances ?? new Map(),
+        transactions: transactionsResult?.transfers ?? [],
+        identityPubKey: identityPubKey ?? "",
+        didConnect: true,
+        connectionError: false,
+      });
+      return true;
+    } catch {
+      isInitializingRef.current = false;
+      setSparkInformation((current) => ({
+        ...current,
+        connectionError: true,
+        didConnect: false,
+      }));
+      return false;
+    }
+  }, []);
 
   useEffect(() => {
-    if (!sparkInformation.didConnect) return;
-
-    let intervalId;
+    if (!sparkInformation.didConnect) return undefined;
 
     const updateSparkData = async () => {
-      try {
-        const [balance, transactions] = await Promise.all([
-          getSparkBalance(),
-          getSparkTransactions(),
-        ]);
-        setSparkInformation((prev) => ({
-          ...prev,
-          balance: balance?.balance || 0,
-          transactions: transactions?.transfers || [],
-        }));
-      } catch (error) {
-        console.error("Failed to update Spark data:", error);
-      }
+      const [balanceResult, transactionsResult] = await Promise.all([
+        getSparkBalance(),
+        getSparkTransactions(),
+      ]);
+
+      if (!balanceResult?.didWork) return;
+      setSparkInformation((current) => ({
+        ...current,
+        balance: balanceResult.balance ?? current.balance,
+        satsBalance: balanceResult.satsBalance ?? current.satsBalance,
+        tokenBalances: balanceResult.tokenBalances ?? current.tokenBalances,
+        transactions: transactionsResult?.transfers ?? current.transactions,
+      }));
     };
 
-    intervalId = setInterval(updateSparkData, 30 * 1000);
-
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
-    };
+    const intervalId = window.setInterval(updateSparkData, 30_000);
+    return () => window.clearInterval(intervalId);
   }, [sparkInformation.didConnect]);
 
   const contextValue = useMemo(
     () => ({
       sparkInformation,
-      setSparkInformation,
-      mnemoinc,
-      setMnemonic,
+      restoreWallet,
     }),
-    [sparkInformation, setSparkInformation, mnemoinc, setMnemonic]
+    [restoreWallet, sparkInformation]
   );
 
   return (
@@ -102,7 +111,7 @@ const SparkWalletProvider = ({ children, navigate }) => {
 function useSpark() {
   const context = useContext(SparkWalletManager);
   if (!context) {
-    throw new Error("useSparkWallet must be used within a SparkWalletProvider");
+    throw new Error("useSpark must be used within a SparkWalletProvider");
   }
   return context;
 }

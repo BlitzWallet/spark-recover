@@ -1,23 +1,190 @@
-/* Welcome contianer */
 .welcomeContainer {
+  background: var(--color-bg);
+}
+
+.welcomeContent {
+  min-height: calc(100dvh - 8.4rem);
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-bottom: 1.75rem;
+}
+
+.welcomeEyebrow {
+  margin: 0 0 1.1rem;
+  color: var(--color-brand);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.welcomeContent h1 {
+  max-width: 650px;
+  margin: 0;
+  color: var(--color-ink);
+  font-size: clamp(3rem, 7vw, 5.1rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+
+.welcomeLead {
+  max-width: 550px;
+  margin: 1.35rem 0 0;
+  color: var(--color-ink-60);
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.securityNotice {
+  width: 100%;
+  max-width: 590px;
+  margin-top: 2.4rem;
+  padding: 0 0 0;
+  border-radius: 2rem;
+  background: var(--color-surface-offset);
+  overflow: hidden;
+}
+
+.securityNoticeHeader {
+  padding: 0 1.55rem;
+}
+
+.securityNotice h2 {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: 1.45rem;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+}
+
+.securityNoticeHeader > p {
+  max-width: 430px;
+  margin: 0.55rem 0 0;
+  color: var(--color-ink-60);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.securityChecklist {
+  margin: 0 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.securityChecklistItem {
+  min-height: 6.1rem;
+  display: grid;
+  grid-template-columns: 2.15rem minmax(0, 1fr) 1.35rem;
   align-items: center;
-
-  text-align: center;
-  z-index: 1;
-}
-.welcomeContainer h1 {
-  margin-top: auto;
+  gap: 0.8rem;
+  padding: 1rem 1.55rem;
 }
 
-.welcomeContainer .description {
-  width: 90%;
-  max-width: 700px;
-  margin: 20px auto;
-  line-height: 2rem;
+.securityChecklistItem + .securityChecklistItem {
+  border-top: 1px solid rgba(255, 255, 255, 0.65);
 }
 
-.welcomeContainer button {
-  margin-bottom: auto;
+.securityChecklistIcon,
+.securityChecklistChevron {
+  color: var(--color-brand);
+  stroke-width: 2.25;
+}
+
+.securityChecklistIcon {
+  width: 1.9rem;
+  height: 1.9rem;
+}
+
+.securityChecklistChevron {
+  width: 1.35rem;
+  height: 1.35rem;
+  justify-self: end;
+}
+
+.securityChecklistItem h3,
+.securityChecklistItem p {
+  margin: 0;
+}
+
+.securityChecklistItem h3 {
+  color: var(--color-ink);
+  font-size: 0.98rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.securityChecklistItem p {
+  margin-top: 0.28rem;
+  color: var(--color-ink-60);
+  font-size: 0.83rem;
+  line-height: 1.45;
+}
+
+.welcomeAction {
+  margin-top: 2rem;
+  padding-right: 1.5rem;
+}
+
+.welcomeFootnote {
+  max-width: 510px;
+  margin: 1.25rem 0 0;
+  color: var(--color-ink-45);
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 680px) {
+  .welcomeContent {
+    min-height: calc(100dvh - 7rem);
+    justify-content: center;
+  }
+
+  .welcomeContent h1 {
+    font-size: clamp(2.75rem, 14vw, 4rem);
+  }
+
+  .welcomeLead {
+    font-size: 0.98rem;
+  }
+
+  .securityNotice {
+    margin-top: 1.9rem;
+    padding-top: 1.35rem;
+    border-radius: 1.7rem;
+  }
+
+  .securityNoticeHeader {
+    padding: 0 1.2rem;
+  }
+
+  .securityNotice h2 {
+    font-size: 1.32rem;
+  }
+
+  .securityChecklist {
+    margin-top: 1.3rem;
+  }
+
+  .securityChecklistItem {
+    min-height: 5.75rem;
+    grid-template-columns: 2rem minmax(0, 1fr) 1.1rem;
+    gap: 0.7rem;
+    padding: 0.9rem 1.2rem;
+  }
+
+  .securityChecklistIcon {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .welcomeAction {
+    width: 100%;
+    margin-top: 1.7rem;
+  }
 }
