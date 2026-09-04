@@ -170,7 +170,6 @@ export default function RestoreScreen({
         zIndex: currentState === "restore" ? 2 : 1,
       }}
     >
-      <RecoveryHeader onBack={() => handleStateChange("home")} />
       <main className="recoveryPage">
         <div className="recoveryMain restoreContent">
           {isValidating ? (
@@ -215,7 +214,7 @@ export default function RestoreScreen({
               {entryMode === "words" ? (
                 <div className="seedEntry" role="tabpanel">
                   <div className="seedEntryActions">
-                    <p>Enter each word in order, or paste all 12 at once.</p>
+                    <p>Enter each word in the order you wrote them down.</p>
                   </div>
                   <div className="seedWords">
                     {WORD_NUMBERS.map((number) => (

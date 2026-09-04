@@ -3,6 +3,7 @@ import "./App.css";
 import WelcomScreen from "./pages/welcome/welcome";
 import RestoreScreen from "./pages/restore/restore";
 import WalletScreen from "./pages/wallet/wallet";
+import RecoveryHeader from "./components/recoveryHeader/recoveryHeader";
 
 function App() {
   const [currentState, setCurrentState] = useState("home");
@@ -21,6 +22,11 @@ function App() {
 
   return (
     <div className="recoveryApp">
+      <RecoveryHeader
+        onBack={
+          currentState === "home" ? null : () => handleStateChange("home")
+        }
+      />
       <WelcomScreen
         currentState={currentState}
         handleStateChange={handleStateChange}
