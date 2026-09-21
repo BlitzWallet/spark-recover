@@ -260,15 +260,16 @@ export default function RestoreScreen({
                   <p className="qrRestoreLabel">Recovery QR</p>
                   <h2>Use a QR from your original backup.</h2>
                   <p>
-                    Open the camera on this device or choose a QR image. Make
-                    sure nobody can see your screen while scanning.
+                    Open the camera on this device and scan your recovery phrase
+                    QR image. Make sure nobody can see your screen while
+                    scanning.
                   </p>
                   <button
                     className="recoveryButton"
                     type="button"
                     onClick={() => setUseCamera(true)}
                   >
-                    Open scanner <span aria-hidden="true">→</span>
+                    Open scanner
                   </button>
                 </section>
               )}
@@ -285,7 +286,7 @@ export default function RestoreScreen({
                   type="button"
                   onClick={submitRecovery}
                 >
-                  Restore wallet <span aria-hidden="true">→</span>
+                  Restore wallet
                 </button>
               )}
             </>

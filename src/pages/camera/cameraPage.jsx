@@ -1,18 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import QrScanner from "qr-scanner";
-import flashLightNoFill from "../../assets/flashlightNoFillWhite.png";
-import flashLightFill from "../../assets/flashlight.png";
-import images from "../../assets/images.png";
 import { useCameraPermission } from "../../hooks/useCameraPermission";
 import "./camera.css";
 
 export default function Camera({ mode, title, description, onScan, onClose }) {
   const videoRef = useRef(null);
   const scannerRef = useRef(null);
-  const fileInputRef = useRef(null);
   const didScanRef = useRef(false);
   const [isCameraReady, setIsCameraReady] = useState(false);
-  const [isFlashlightOn, setIsFlashlightOn] = useState(false);
   const [scanError, setScanError] = useState("");
   const cameraPermission = useCameraPermission();
 
@@ -69,34 +64,6 @@ export default function Camera({ mode, title, description, onScan, onClose }) {
     };
   }, [cameraPermission, processScan]);
 
-  const toggleFlashlight = async () => {
-    try {
-      const scanner = scannerRef.current;
-      if (!scanner || !(await scanner.hasFlash())) return;
-      await scanner.toggleFlash();
-      setIsFlashlightOn(scanner.isFlashOn());
-    } catch {
-      setScanError("Flashlight control is not available on this device.");
-    }
-  };
-
-  const scanImage = async (event) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    setScanError("");
-
-    try {
-      const result = await QrScanner.scanImage(file, {
-        returnDetailedScanResult: true,
-      });
-      processScan(result.data);
-    } catch {
-      setScanError("We could not find a readable QR code in that image.");
-    } finally {
-      event.target.value = "";
-    }
-  };
-
   return (
     <main className="cameraPage">
       <div className="cameraTopBar">
@@ -114,35 +81,6 @@ export default function Camera({ mode, title, description, onScan, onClose }) {
       />
       <div className="cameraMask" aria-hidden="true">
         <div className="cameraFrame" />
-      </div>
-
-      <div className="cameraControls">
-        <button
-          className="cameraControl"
-          type="button"
-          onClick={() => fileInputRef.current?.click()}
-        >
-          <img src={images} alt="" />
-          Choose image
-        </button>
-        <button
-          className="cameraControl"
-          type="button"
-          onClick={toggleFlashlight}
-        >
-          <img
-            src={isFlashlightOn ? flashLightFill : flashLightNoFill}
-            alt=""
-          />
-          Flash
-        </button>
-        <input
-          ref={fileInputRef}
-          className="cameraFileInput"
-          type="file"
-          accept="image/*"
-          onChange={scanImage}
-        />
       </div>
     </main>
   );

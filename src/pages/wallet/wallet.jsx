@@ -464,8 +464,7 @@ export default function WalletScreen({ currentState, isTransitioning }) {
                   onClick={reviewWithdrawal}
                   disabled={isLoading}
                 >
-                  {isLoading ? "Preparing…" : "Review withdrawal"}{" "}
-                  <span aria-hidden="true">→</span>
+                  {isLoading ? "Preparing…" : "Review withdrawal"}
                 </button>
               </div>
             )}

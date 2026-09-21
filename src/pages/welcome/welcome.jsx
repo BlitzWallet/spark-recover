@@ -23,8 +23,8 @@ export default function WelcomeScreen({
         <div className="recoveryMain welcomeContent">
           <h1>Recover access to your wallet.</h1>
           <p className="welcomeLead">
-            Restore a Blitz or Spark-compatible wallet, see your recovered
-            funds, and move your Bitcoin somewhere safe.
+            Restore your Blitz wallet, see your recovered funds, and move your
+            Bitcoin somewhere safe.
           </p>
 
           <button
@@ -32,7 +32,7 @@ export default function WelcomeScreen({
             type="button"
             onClick={() => handleStateChange("restore")}
           >
-            Begin recovery <span aria-hidden="true">→</span>
+            Begin recovery
           </button>
         </div>
       </main>
