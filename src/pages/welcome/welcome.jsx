@@ -1,5 +1,3 @@
-import RecoveryHeader from "../../components/recoveryHeader/recoveryHeader";
-import { ChevronRight, Globe2, ShieldCheck, UserRoundX } from "lucide-react";
 import "./style.css";
 
 export default function WelcomeScreen({

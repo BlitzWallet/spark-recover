@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { validateMnemonic } from "@scure/bip39";
 import { wordlist } from "@scure/bip39/wordlists/english";
-import RecoveryHeader from "../../components/recoveryHeader/recoveryHeader";
 import {
   handleQRSeed,
   handleRestoreFromText,

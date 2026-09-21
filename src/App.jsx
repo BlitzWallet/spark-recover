@@ -24,7 +24,12 @@ function App() {
     <div className="recoveryApp">
       <RecoveryHeader
         onBack={
-          currentState === "home" ? null : () => handleStateChange("home")
+          currentState === "home"
+            ? null
+            : () =>
+                currentState === "wallet"
+                  ? window.location.reload()
+                  : handleStateChange("home")
         }
       />
       <WelcomScreen

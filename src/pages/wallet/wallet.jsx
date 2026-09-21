@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import RecoveryHeader from "../../components/recoveryHeader/recoveryHeader";
 import Camera from "../camera/cameraPage";
+import DerivedRecovery from "./derivedRecovery";
 import { useSpark } from "../../contexts/sparkContext";
 import { sparkPaymenWrapper } from "../../functions/spark/payments";
 import "./style.css";
@@ -216,13 +216,12 @@ export default function WalletScreen({ currentState, isTransitioning }) {
         zIndex: currentState === "wallet" ? 2 : 1,
       }}
     >
-      <RecoveryHeader />
       <main className="recoveryPage">
         <div className="recoveryMain walletContent">
           <h1>Your available funds.</h1>
           <p className="walletLead">
-            This recovery wallet is intentionally limited to viewing balances
-            and moving your Bitcoin out safely.
+            View your main wallet balance, find funds in Blitz derived wallets,
+            and move them to your main seed before withdrawing Bitcoin.
           </p>
 
           <section className="bitcoinBalance" aria-label="Bitcoin balance">
@@ -276,6 +275,8 @@ export default function WalletScreen({ currentState, isTransitioning }) {
               </p>
             </section>
           )}
+
+          <DerivedRecovery key={sparkInformation.recoveryId} />
 
           <section className="withdrawalPanel" aria-labelledby="withdraw-title">
             {stage === "success" ? (
