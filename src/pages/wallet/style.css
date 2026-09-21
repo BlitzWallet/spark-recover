@@ -283,6 +283,23 @@
   font-size: 0.78rem;
   overflow-wrap: anywhere;
 }
+.derivedPhrase {
+  margin-top: 0.8rem;
+  color: var(--color-ink-60);
+  font-size: 0.78rem;
+}
+.derivedPhrase summary {
+  cursor: pointer;
+}
+.derivedPhrase code {
+  display: block;
+  margin-top: 0.4rem;
+  overflow-wrap: anywhere;
+  user-select: all;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: var(--color-bg);
+}
 .derivedReview {
   position: fixed;
   z-index: 10;

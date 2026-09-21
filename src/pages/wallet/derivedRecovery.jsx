@@ -11,11 +11,8 @@ import {
 const categories = ["accounts", "savings", "pools", "gifts", "children"];
 const formatSats = (value) => Number(value || 0).toLocaleString();
 const resultLabel = (item) => {
-  const feature = `${RECOVERY_SPACES[item.category].label} #${item.index}`;
-  const origin =
-    item.source === "main" ? "main seed" : `Account #${item.source}`;
   const legacy = item.variant === "current" ? "" : " · older gift";
-  return `${feature} from ${origin}${legacy}`;
+  return `${RECOVERY_SPACES[item.category].label} #${item.index}${legacy}`;
 };
 
 export default function DerivedRecovery() {
@@ -30,7 +27,6 @@ export default function DerivedRecovery() {
   const [canContinue, setCanContinue] = useState(false);
   const [review, setReview] = useState(null);
   const wallets = useRef(new Map());
-  const accountSeeds = useRef(new Map());
   const nextIndices = useRef(new Map());
   const scanRun = useRef(0);
   useEffect(
@@ -54,8 +50,7 @@ export default function DerivedRecovery() {
       setError("Restore the main wallet again to scan these paths.");
       return;
     }
-    // Savings is a single path off the main seed; no account sweep needed.
-    const scanAccounts = category !== "savings";
+    const config = RECOVERY_SPACES[category];
     const run = ++scanRun.current;
     setError("");
     setProgress("");
@@ -64,57 +59,32 @@ export default function DerivedRecovery() {
     let scanned = 0;
     let found = 0;
     if (!continuePrevious || scannedCategory !== category) {
-      nextIndices.current.clear();
-      accountSeeds.current.clear();
+      nextIndices.current.delete(category);
       setResults((current) =>
-        current.filter(
-          (item) =>
-            item.category !== category &&
-            (!scanAccounts || item.category !== "accounts"),
-        ),
+        current.filter((item) => item.category !== category),
       );
     }
 
-    const moreToScan = () => {
-      if (
-        scanAccounts &&
-        (nextIndices.current.get("main:accounts") ??
-          RECOVERY_SPACES.accounts.start) <= RECOVERY_SPACES.accounts.end
-      )
-        return true;
-      if (category === "accounts") return false;
-      const sources = scanAccounts
-        ? ["main", ...accountSeeds.current.keys()]
-        : ["main"];
-      return sources.some(
-        (sourceKey) =>
-          (nextIndices.current.get(`${sourceKey}:${category}`) ??
-            RECOVERY_SPACES[category].start) <= RECOVERY_SPACES[category].end,
-      );
-    };
-
-    const scanSpace = async (sourceKey, sourceSeed, space) => {
-      const config = RECOVERY_SPACES[space];
-      const derive = await createRecoveryDeriver(sourceSeed);
+    // Only paths derived directly from the main seed. A funded wallet's
+    // phrase is shown so it can be restored as its own top-level wallet.
+    try {
+      const derive = await createRecoveryDeriver(mainSeed);
       const variants =
-        space === "gifts"
+        category === "gifts"
           ? ["current", "legacy", "legacy-offset"]
           : ["current"];
-      const cursorKey = `${sourceKey}:${space}`;
       await scanUntilGap({
-        start: nextIndices.current.get(cursorKey) ?? config.start,
+        start: nextIndices.current.get(category) ?? config.start,
         end: config.end,
         shouldStop: () => run !== scanRun.current,
-        onAdvance: (next) => nextIndices.current.set(cursorKey, next),
+        onAdvance: (next) => nextIndices.current.set(category, next),
         visit: async (index) => {
           let foundAtIndex = false;
           for (const variant of variants) {
             if (run !== scanRun.current) return false;
             setProgress(`${scanned} wallets checked`);
-            const derivedSeed = derive(space, index, variant);
-            if (space === "accounts")
-              accountSeeds.current.set(String(index), derivedSeed);
-            const wallet = await openRecoveryWallet(derivedSeed);
+            const mnemonic = derive(category, index, variant);
+            const wallet = await openRecoveryWallet(mnemonic);
             const balance = await wallet.getBalance();
             if (run !== scanRun.current) return false;
             scanned += 1;
@@ -123,7 +93,7 @@ export default function DerivedRecovery() {
             );
             const ownedSats = Number(balance.satsBalance?.owned ?? sats);
             const tokens = spendableTokens(balance.tokenBalances);
-            const key = `${sourceKey}:${space}:${index}:${variant}`;
+            const key = `${category}:${index}:${variant}`;
             if (sats > 0 || ownedSats > 0 || tokens.length > 0) {
               foundAtIndex = true;
               found += 1;
@@ -132,13 +102,13 @@ export default function DerivedRecovery() {
                 ...current.filter((item) => item.key !== key),
                 {
                   key,
-                  source: sourceKey,
-                  category: space,
+                  category,
                   index,
                   sats,
                   ownedSats,
                   tokens,
                   variant,
+                  mnemonic,
                 },
               ]);
             } else {
@@ -148,31 +118,23 @@ export default function DerivedRecovery() {
           return foundAtIndex;
         },
       });
-    };
-
-    try {
-      if (scanAccounts) await scanSpace("main", mainSeed, "accounts");
-      if (category !== "accounts" && run === scanRun.current) {
-        await scanSpace("main", mainSeed, category);
-        for (const [accountNumber, accountSeed] of accountSeeds.current) {
-          if (run !== scanRun.current) break;
-          await scanSpace(accountNumber, accountSeed, category);
-        }
-      }
       if (run === scanRun.current) {
-        const more = moreToScan();
+        const more =
+          (nextIndices.current.get(category) ?? config.start) <= config.end;
         setCanContinue(more);
-        if (!scanAccounts && found === 0) {
+        if (category === "savings" && found === 0) {
           setProgress("No funds found in savings.");
           return;
         }
         setProgress(
-          `Checked ${scanned} wallet${scanned === 1 ? "" : "s"}. ${more ? "Continue scanning to search beyond the empty gaps." : "Reached the end of these paths."}`,
+          `Checked ${scanned} wallet${scanned === 1 ? "" : "s"}. ${more ? "Continue scanning to search beyond the empty gap." : "Reached the end of this path."}`,
         );
       }
     } catch (scanError) {
       if (run === scanRun.current) {
-        setCanContinue(moreToScan());
+        setCanContinue(
+          (nextIndices.current.get(category) ?? config.start) <= config.end,
+        );
         setError(
           `Scan stopped after ${scanned} wallets: ${scanError.message || "Unable to load a wallet."} No later indices were checked.`,
         );
@@ -271,8 +233,8 @@ export default function DerivedRecovery() {
         ))}
       </div>
       <p className="derivedHint">
-        Each path pauses after 15 consecutive empty numbers. Continue scan to
-        check beyond a gap.
+        The scan pauses after 15 empty numbers in a row. Continue scan to check
+        beyond the gap.
       </p>
       {error && (
         <p className="withdrawalError" role="alert">
@@ -329,6 +291,14 @@ export default function DerivedRecovery() {
                   spendable.
                 </p>
               )}
+              <details className="derivedPhrase">
+                <summary>Show recovery phrase</summary>
+                <p>
+                  Restore this phrase to open this wallet directly. Anyone with
+                  it can spend these funds.
+                </p>
+                <code>{item.mnemonic}</code>
+              </details>
               {item.sats > 0 && (
                 <button
                   type="button"
