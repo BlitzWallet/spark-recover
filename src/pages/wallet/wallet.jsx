@@ -28,7 +28,8 @@ function getDestinationType(value) {
 }
 
 function isZeroAmountInvoice(invoice) {
-  return /^lnbc1/i.test(invoice);
+  // The bech32 separator is the last "1"; a bare "lnbc" prefix means no amount.
+  return invoice.toLowerCase().lastIndexOf("1") === 4;
 }
 
 function getInvoiceAmount(invoice) {

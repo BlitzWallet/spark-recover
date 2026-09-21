@@ -186,7 +186,6 @@ export const sendSparkPayment = async ({
       receiverSparkAddress: receiverSparkAddress.toLowerCase(),
       amountSats,
     });
-    console.log("spark payment response", response);
     return { didWork: true, response };
   } catch (err) {
     console.log("Send spark payment error", err);
@@ -453,7 +452,6 @@ export const findTransactionTxFromTxHistory = async (
     // First check cached transactions
     const cachedTx = previousTxs.find((tx) => tx.id === sparkTxId);
     if (cachedTx) {
-      console.log("Using cache tx history");
       return {
         didWork: true,
         offset: previousOffset,
@@ -481,7 +479,6 @@ export const findTransactionTxFromTxHistory = async (
       }
 
       if (transfers.offset === -1) {
-        console.log("Reached end of transactions (offset: -1)");
         break;
       }
 
