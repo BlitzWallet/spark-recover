@@ -1,70 +1,76 @@
-# Spark Wallet Recovery Tool
+# Blitz Recover
 
-A minimal, open-source recovery interface for Spark-compatible Bitcoin and Lightning wallets.  
-Hosted at [recover.blitzwalletapp.com](https://recover.blitzwalletapp.com), this tool is designed to help users regain access to their funds in case their original wallet app becomes unavailable.
+A minimal, open-source recovery interface for Blitz Wallet.\*
+Hosted at [recover.blitzwalletapp.com](https://recover.blitzwalletapp.com), it helps you regain access to your funds if Blitz mobile or Blitz web becomes unavailable.
 
-> Self-custodial. Stateless. Trustless. No third parties involved.
+> Self-custodial. Stateless. Open source.
+
+\* Blitz Wallet is built on Spark, so this tool can also recover other Spark wallets that use the standard Spark SDK key derivation. See [Using with other Spark wallets](#using-with-other-spark-wallets).
 
 ## Features
 
-- 100% Stateless
-- Compatible with any Spark wallet
-- Runs in any modern browser
-- Open-source and verifiable
+- Stateless: your seed phrase is held in memory only and is never written to storage or sent to any server run by this project
+- Recovers your main Blitz Wallet balance and transaction history
+- Recovers Blitz derived accounts: accounts, savings, pools, gifts, and child accounts
+- Send funds out over Spark, Lightning, or on-chain Bitcoin
+- QR code scanning for destination addresses (requires camera permission)
+- Runs in any modern browser, no backend
 - Run your own instance
 
-## 🛠 How to Use It
+## How to Use It
 
-Visit: [https://recover.blitzwalletapp.com](https://recover.blitzwalletapp.com)
+Visit [recover.blitzwalletapp.com](https://recover.blitzwalletapp.com), or run it locally (see below).
 
-1. Enter the seedphrase associated with your Spark wallet.
-2. View your available balance.
-3. Send your funds to a new wallet of your choice.
+1. Enter your Blitz Wallet seed phrase.
+2. View your available balance and transaction history.
+3. Optionally scan for Blitz derived accounts (savings, pools, gifts, and so on).
+4. Send your funds to a new wallet of your choice.
 
-## Running Locally
+## Using with Other Spark Wallets
 
-This project is a Vite-powered React app. To run it yourself:
+Because Blitz is built on Spark, this tool also works with other Spark wallets, with limits:
 
-### 1. Clone the repository
+- It opens the Spark SDK's default mainnet account (`m/8797555'`, account 1). Wallets that use a different account number, derivation path, or custom signer will not show up.
+- The derived-account scan follows Blitz's own paths and will find nothing for other wallets.
+
+## Trust Model
+
+Please understand what this tool can and cannot guarantee:
+
+- **Your keys stay with you.** The seed phrase never leaves your browser. All signing happens locally.
+- **Spark operators are still involved.** Spark is not a trustless system. Checking your balance and sending funds requires talking to the Spark Operators and the Spark Service Provider (currently run by Lightspark, Flashnet and Breez). Spark relies on at least one operator acting honestly.
+
+## Verifying the Code
+
+The source in this repository is fully readable, but the hosted site does not publish reproducible builds or build hashes. You cannot prove the hosted version matches this code. For maximum assurance, build and run it yourself:
 
 ```bash
-git clone https://github.com/blakekaufman/spark-wallet-recovery-tool.git
-cd spark-wallet-recovery-tool
+git clone https://github.com/BlakeKaufman/spark-recover.git
 ```
-
-### 2. Install dependencies
 
 ```bash
-npm install
+cd spark-recover
 ```
 
-### 3. Start the development server
+```bash
+npm ci
+```
 
 ```bash
 npm run dev
 ```
 
+`npm ci` installs the exact dependency versions pinned in `package-lock.json`. To build static files you can serve yourself, run `npm run build` and serve the `dist/` folder.
+
 ## Running in GitHub Codespaces
 
-You can run this project entirely in the browser using GitHub Codespaces:
-
-### 1. Create a Codespace
-
-- Navigate to the repository on GitHub.
-- Click the **Code** button, then select the **Codespaces** tab.
-- Click **Create codespace on main**.
-
-### 2. Start the development server
-
-Once the Codespace starts and the environment is ready, run:
-
-### 2. Install dependencies
+1. Open the repository on GitHub.
+2. Click **Code**, select the **Codespaces** tab, then **Create codespace on main**.
+3. Once the environment is ready, run:
 
 ```bash
-npm install
+npm ci
 ```
-
-### 3. Start the development server
 
 ```bash
 npm run dev
@@ -72,8 +78,8 @@ npm run dev
 
 ## Contributions
 
-Pull requests are welcome! If you’re building on the Spark protocol or have improvements to suggest, feel free to open an issue or PR.
+Pull requests are welcome. If you have improvements to suggest, open an issue or PR.
 
 ## License
 
-Spark recovery is released under the terms of the Apache 2.0 license. See LICENSE for more information.
+Released under the Apache 2.0 license. See [LICENSE](LICENSE) for details.
