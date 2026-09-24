@@ -1,3 +1,4 @@
+import { ArrowUpRight, ShieldCheck } from "lucide-react";
 import "./style.css";
 
 export default function WelcomeScreen({
@@ -24,6 +25,27 @@ export default function WelcomeScreen({
             Restore your Blitz wallet, see your recovered funds, and move your
             Bitcoin somewhere safe.
           </p>
+
+          <aside className="demoNotice">
+            <span className="demoNoticeIcon" aria-hidden="true">
+              <ShieldCheck />
+            </span>
+            <div className="demoNoticeText">
+              <p>
+                Anyone with your recovery phrase can take your funds. Never
+                enter it anywhere you don't fully trust. It's safest to run this
+                tool yourself.
+              </p>
+              <a
+                className="demoNoticeLink"
+                href="https://github.com/BlitzWallet/spark-recover"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View source <ArrowUpRight aria-hidden="true" />
+              </a>
+            </div>
+          </aside>
 
           <button
             className="recoveryButton welcomeAction"
